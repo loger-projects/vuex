@@ -1,9 +1,9 @@
 <template>
     <div id="productListTwo">
-        <h1 class="list-title">Product List Two</h1>
+        <h1 class="list-title">Out Stock Product <span>({{ outStockProductsCount }})</span></h1>
         <div class="list">
             <ul>
-                <li v-for="product in saleProducts" :key="product.id">{{ product.name }} <span class="price">${{ product.price }}</span></li>
+                <li v-for="product in outStockProducts" :key="product.id">{{ product.name }} <span class="price">${{ product.price }}</span></li>
             </ul>
         </div>
     </div>
@@ -13,11 +13,11 @@
 export default {
     name: 'ProductListTwo',
     computed: {
-        products() {
-            return this.$store.state.products
+        outStockProducts() {
+            return this.$store.getters.outStockProducts
         },
-        saleProducts() {
-            return this.$store.getters.saleProducts
+        outStockProductsCount() {
+            return this.$store.getters.outeStockProductsCount
         }
     }
 }

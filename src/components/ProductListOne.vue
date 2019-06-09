@@ -1,9 +1,12 @@
 <template>
     <div id="productListOne">
-        <h1 class="list-title">Product List One</h1>
+        <h1 class="list-title">All Products</h1>
         <div class="list">
             <ul>
-                <li v-for="product in products" :key="product.id">{{ product.name }} <span class="price">${{ product.price }}</span></li>
+                <li v-for="product in products" :key="product.id">
+                    {{ product.name }} <span class="price">${{ product.price }}</span>
+                    <div><button class="button" @click="increaseProductPrice(product)">Increase by 10$</button></div>
+                </li>
             </ul>
         </div>
     </div>
@@ -16,12 +19,16 @@ export default {
         products() {
             return this.$store.state.products
         },
-        saleProduct() {
-            return this.$store.state.products.map(product => {
-                return {
-                    name: '**' + product.name + '**',
-                    price: product.price / 2
-                }
+        count() {
+            return this.$store.getters.getCount
+        }
+    },
+    methods: {
+        increaseProductPrice(product) {
+            this.$store.commit('increaseProductPrice', {
+                name: product.name, 
+                price: product.price + 10, 
+                inStock: product.inStock
             })
         }
     }
