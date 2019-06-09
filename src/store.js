@@ -33,6 +33,9 @@ export default new Vuex.Store({
     increment(state) {
       state.count++
     },
+    incrementBy(state, amount) {
+      state.count += amount
+    },
     doubleIncrement(state) {
       state.count *= 2
     },
@@ -61,10 +64,53 @@ export default new Vuex.Store({
     async actionA (context) {
       // assuming `getData()` return Promises
       context.commit('gotData', await context.state.getData())
-    },
+    }
     
   },
   modules: {
-    
+    // namespace = true: allow moltiple modules to react to the same mutation/action type
+    account: {
+      namespaced: true,
+      state: {
+        count: 1,
+        firstName: 'Leanne'
+      },
+      getters: {
+        getCount(state) {
+          return state.count
+        },
+        plussCount(state, getters) {
+          return getters.getCount + state.count
+        },
+        getRootCount(state, getters, rootState, rootGetters) {
+          return rootState.count + rootGetters.count;
+        }
+      },
+      mutations: {
+
+      },
+      actions: {
+
+      },
+      modules: {
+        info: {
+          state: {
+            name: 'Loger Nam',
+            age: 18
+          },
+          getters: {
+            getAge(state) {
+              return state.age
+            }
+          },
+          mutations: {
+
+          },
+          actions: {
+
+          }
+        }
+      }
+    }
   }
 })
